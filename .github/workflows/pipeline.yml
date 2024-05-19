@@ -1,0 +1,47 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
+    services:
+      dummy-api:
+        image: dummy-api:latest
+        ports:
+          - 3001:3001
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Install dependencies
+      run: npm install
+      working-directory: ./src
+
+    - name: Build project
+      run: npm run build
+      working-directory: ./src
+
+    - name: Build Docker image for dummy-api
+      run: docker build -t dummy-api ./dummy-api
+
+    - name: Run Docker container for dummy-api
+      run: docker run -d -p 3001:3001 dummy-api
+
+    - name: Deploy to Firebase Hosting
+      uses: FirebaseExtended/action-hosting-deploy@v0
+      with:
+        repoToken: '${{ secrets.GITHUB_TOKEN }}'
+        firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}'
+        channelId: live
+        projectId: your-firebase-project-id
