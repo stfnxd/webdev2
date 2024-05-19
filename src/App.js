@@ -2,15 +2,15 @@
 
 import React from 'react';
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
-import StockPage from './pages/StockPage'; // Importer din StockPage
+import Dashboard from './pages/Dashboard';
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
 
-      {/* Routes */}
-        <Route path="/" element={<StockPage />} />
+      
+      <Route exact path="/" element={<Dashboard />} />
 
       </Routes>
     </BrowserRouter>
