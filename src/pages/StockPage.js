@@ -7,7 +7,7 @@ const StockPage = () => {
   return (
     <div>
       <h1>Stock Page</h1>
-      <StockData /> {/* Indsæt StockData-komponenten her */}
+      <StockData />
     </div>
   );
 };
