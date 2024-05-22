@@ -63,6 +63,11 @@ const Login = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            <Box>
+              <Typography color="secondary" variant="body2" component={Link} to="/forgot-password">
+                Forgot Password?
+              </Typography>
+            </Box>
             <Button
               type="submit"
               fullWidth
@@ -84,7 +89,7 @@ const Login = () => {
             </Button>
             <Box sx={{ mt: 2 }}>
               <Typography variant="body2" align="center">
-                Don't have an account? <Typography variant="body2" component={Link} to="/register">Register</Typography>
+                Don't have an account? <Typography color="secondary" variant="body2" component={Link} to="/register">Register</Typography>
               </Typography>
             </Box>
           </Box>
