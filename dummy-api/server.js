@@ -6,55 +6,201 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-app.use(cors({
-    origin: 'http://localhost:3000'
-}));
+app.use(cors());
 
-// Define routes for stock data
-app.get('/v1/last/stocks/:symbol', (req, res) => {
-    // Return test data for the requested stock symbol
-    const symbol = req.params.symbol;
-    const testData = {
+// Hardcoded stock data
+const stockData = {
+    AAPL: {
         status: 'OK',
         request_id: 'dummy-request-id',
-        ticker: symbol,
+        ticker: 'AAPL',
         queryCount: 1,
         resultsCount: 1,
         adjusted: true,
         results: [
             {
-                T: symbol,
-                v: Math.random() * 1000000, // Random volume
-                vw: Math.random() * 200, // Random volume weighted average price
-                o: Math.random() * 200, // Random open price
-                c: Math.random() * 200, // Random close price
-                h: Math.random() * 200, // Random high price
-                l: Math.random() * 200, // Random low price
-                t: Date.now(), // Current timestamp
-                n: Math.floor(Math.random() * 1000000) // Random number of trades
+                T: 'AAPL',
+                v: 5000000,
+                vw: 150,
+                o: 148,
+                c: 151,
+                h: 152,
+                l: 147,
+                t: Date.now(),
+                n: 2000
             }
         ]
-    };
-    res.json(testData);
+    },
+    GOOGL: {
+        status: 'OK',
+        request_id: 'dummy-request-id',
+        ticker: 'GOOGL',
+        queryCount: 1,
+        resultsCount: 1,
+        adjusted: true,
+        results: [
+            {
+                T: 'GOOGL',
+                v: 3000000,
+                vw: 2750,
+                o: 2740,
+                c: 2760,
+                h: 2770,
+                l: 2730,
+                t: Date.now(),
+                n: 1500
+            }
+        ]
+    },
+    MSFT: {
+        status: 'OK',
+        request_id: 'dummy-request-id',
+        ticker: 'MSFT',
+        queryCount: 1,
+        resultsCount: 1,
+        adjusted: true,
+        results: [
+            {
+                T: 'MSFT',
+                v: 4000000,
+                vw: 290,
+                o: 288,
+                c: 291,
+                h: 292,
+                l: 287,
+                t: Date.now(),
+                n: 1700
+            }
+        ]
+    },
+    TSLA: {
+        status: 'OK',
+        request_id: 'dummy-request-id',
+        ticker: 'TSLA',
+        queryCount: 1,
+        resultsCount: 1,
+        adjusted: true,
+        results: [
+            {
+                T: 'TSLA',
+                v: 2500000,
+                vw: 700,
+                o: 690,
+                c: 710,
+                h: 715,
+                l: 685,
+                t: Date.now(),
+                n: 1800
+            }
+        ]
+    },
+    AMZN: {
+        status: 'OK',
+        request_id: 'dummy-request-id',
+        ticker: 'AMZN',
+        queryCount: 1,
+        resultsCount: 1,
+        adjusted: true,
+        results: [
+            {
+                T: 'AMZN',
+                v: 3200000,
+                vw: 3400,
+                o: 3380,
+                c: 3420,
+                h: 3430,
+                l: 3360,
+                t: Date.now(),
+                n: 1600
+            }
+        ]
+    }
+};
+
+// Hardcoded crypto data
+const cryptoData = {
+    BTC: {
+        status: 'OK',
+        request_id: 'dummy-request-id',
+        symbol: 'BTC',
+        last_trade: {
+            price: 45000,
+            size: 0.5,
+            exchange: 1,
+            conditions: [1],
+            timestamp: Date.now()
+        }
+    },
+    ETH: {
+        status: 'OK',
+        request_id: 'dummy-request-id',
+        symbol: 'ETH',
+        last_trade: {
+            price: 3000,
+            size: 2,
+            exchange: 1,
+            conditions: [1],
+            timestamp: Date.now()
+        }
+    },
+    DOGE: {
+        status: 'OK',
+        request_id: 'dummy-request-id',
+        symbol: 'DOGE',
+        last_trade: {
+            price: 0.3,
+            size: 1000,
+            exchange: 1,
+            conditions: [1],
+            timestamp: Date.now()
+        }
+    },
+    ADA: {
+        status: 'OK',
+        request_id: 'dummy-request-id',
+        symbol: 'ADA',
+        last_trade: {
+            price: 1.2,
+            size: 500,
+            exchange: 1,
+            conditions: [1],
+            timestamp: Date.now()
+        }
+    },
+    XRP: {
+        status: 'OK',
+        request_id: 'dummy-request-id',
+        symbol: 'XRP',
+        last_trade: {
+            price: 1.5,
+            size: 600,
+            exchange: 1,
+            conditions: [1],
+            timestamp: Date.now()
+        }
+    }
+};
+
+// Define routes for stock data
+app.get('/v1/last/stocks/:symbol', (req, res) => {
+    const symbol = req.params.symbol.toUpperCase();
+    const data = stockData[symbol];
+    if (data) {
+        res.json(data);
+    } else {
+        res.status(404).json({ status: 'Error', message: 'Stock symbol not found' });
+    }
 });
 
 // Define routes for crypto data
 app.get('/v1/last/crypto/:symbol', (req, res) => {
-    // Return test data for the requested crypto symbol
-    const symbol = req.params.symbol;
-    const testData = {
-        status: 'OK',
-        request_id: 'dummy-request-id',
-        symbol: symbol,
-        last_trade: {
-            price: Math.random() * 60000, // Random price
-            size: Math.random() * 10, // Random size
-            exchange: Math.floor(Math.random() * 10), // Random exchange ID
-            conditions: [Math.floor(Math.random() * 100)], // Random conditions
-            timestamp: Date.now() // Current timestamp
-        }
-    };
-    res.json(testData);
+    const symbol = req.params.symbol.toUpperCase();
+    const data = cryptoData[symbol];
+    if (data) {
+        res.json(data);
+    } else {
+        res.status(404).json({ status: 'Error', message: 'Crypto symbol not found' });
+    }
 });
 
 // Start server
