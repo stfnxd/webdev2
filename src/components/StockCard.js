@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, Typography } from '@mui/material';
+import { Card, CardContent, Typography, Box } from '@mui/material';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+
 
 const StockCard = ({ symbol }) => {
     const [stockData, setStockData] = useState(null);
@@ -17,11 +18,9 @@ const StockCard = ({ symbol }) => {
             }
         };
 
-        // Call fetchStockData immediately and then every second
         fetchStockData();
         const intervalId = setInterval(fetchStockData, 10000);
 
-        // Clean up function
         return () => clearInterval(intervalId);
     }, [symbol]);
 
@@ -30,9 +29,14 @@ const StockCard = ({ symbol }) => {
     return (
         <Card style={{ margin: 16 }}>
             <CardContent>
-                <Typography variant="h5" component="div">
-                    {symbol}
-                </Typography>
+                <Box display="flex" justifyContent="space-between" alignItems="start">
+                    <Typography variant="h5" component="div">
+                        {symbol}
+                    </Typography>
+                    <Typography variant="body2" color="secondary" align="right">
+                        STOCK
+                    </Typography>
+                </Box>
                 <Typography variant="h6" component="div">
                     {priceChange > 0 ? 
                         <ArrowDropUpIcon sx={{ color: 'green' }} /> : 

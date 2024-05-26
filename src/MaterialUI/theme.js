@@ -9,6 +9,9 @@ const getTheme = (mode) => createTheme({
     secondary: {
       main: "#673ab7",
     },
+    text: {
+      third: "#333fff",
+    },
   },
 });
 
