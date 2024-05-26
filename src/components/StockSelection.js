@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { FormControl, InputLabel, MenuItem, Select, Checkbox, ListItemText } from '@mui/material';
-import { db } from '../firebaseConfig'; // adjust the path to match your file structure
+import { db } from '../firebaseConfig'; 
 import { doc, getDoc, setDoc } from "firebase/firestore";
+import { LOADING_DIV } from '../utils/constants';
 
 const StockSelection = ({ onSelect }) => {
     const [stocks, setStocks] = useState([]);
@@ -36,7 +37,7 @@ const StockSelection = ({ onSelect }) => {
     };
 
     if (loading) {
-        return <div>Loading...</div>;
+        return LOADING_DIV;
     }
     return (
         <FormControl fullWidth>
