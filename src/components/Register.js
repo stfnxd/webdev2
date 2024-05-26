@@ -54,7 +54,7 @@ const Register = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
             <Box>
-              <Typography variant="body2" align="center">Already have an account? <Typography variant="body2" color="secondary"component={Link} to="/forgot-password">Login?</Typography>
+              <Typography variant="body2" align="center">Already have an account? <Typography variant="body2" color="secondary"component={Link} to="/login">Login?</Typography>
               </Typography>
             </Box>
             <Button
