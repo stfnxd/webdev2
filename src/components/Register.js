@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebaseConfig';
 import { Button, TextField, Typography, Container, Box, Alert } from '@mui/material';
@@ -53,6 +53,10 @@ const Register = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            <Box>
+              <Typography variant="body2" align="center">Already have an account? <Typography variant="body2" color="secondary"component={Link} to="/login">Login?</Typography>
+              </Typography>
+            </Box>
             <Button
               type="submit"
               fullWidth

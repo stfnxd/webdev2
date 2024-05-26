@@ -1,3 +1,4 @@
+
 // Import dependencies
 const express = require('express');
 const cors = require('cors');
@@ -86,7 +87,7 @@ const stockData = {
                 v: 2500000,
                 vw: 700,
                 o: 690,
-                c: 710,
+                c: 7100,
                 h: 715,
                 l: 685,
                 t: Date.now(),
@@ -181,7 +182,46 @@ const cryptoData = {
     }
 };
 
-// Define routes for stock data
+// Funktion til at generere et tilfældigt tal inden for et interval
+function getRandomArbitrary(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
+// Funktion til at opdatere aktiedata
+function updateStockData() {
+    for (let ticker in stockData) {
+        const stock = stockData[ticker];
+        const result = stock.results[0];
+        const change = getRandomArbitrary(-5, 5);
+        result.o = result.c;
+        result.c += change;
+        result.h = Math.max(result.h, result.c);
+        result.l = Math.min(result.l, result.c);
+        result.vw = (result.vw * result.v + result.c * result.n) / (result.v + result.n);
+        result.v += Math.round(getRandomArbitrary(100000, 500000));
+        result.n += Math.round(getRandomArbitrary(100, 500));
+        result.t = Date.now();
+    }
+}
+
+// Funktion til at opdatere krypto-data
+function updateCryptoData() {
+    for (let symbol in cryptoData) {
+        const crypto = cryptoData[symbol];
+        const lastTrade = crypto.last_trade;
+        const change = getRandomArbitrary(-0.05, 0.05);
+        lastTrade.price += change;
+        lastTrade.size += Math.round(getRandomArbitrary(10, 100));
+        lastTrade.timestamp = Date.now();
+    }
+}
+
+// Opdater data hvert sekund
+setInterval(() => {
+    updateStockData();
+    updateCryptoData();
+}, 10000);
+
 app.get('/v1/last/stocks/:symbol', (req, res) => {
     const symbol = req.params.symbol.toUpperCase();
     const data = stockData[symbol];
@@ -203,7 +243,6 @@ app.get('/v1/last/crypto/:symbol', (req, res) => {
     }
 });
 
-// Start server
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+    console.log(`Server running at http://localhost:${PORT}`);
 });

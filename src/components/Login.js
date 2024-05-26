@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { signInWithEmailAndPassword, signInWithPopup, GithubAuthProvider } from 'firebase/auth';
 import { auth } from '../firebaseConfig';
 import { Button, TextField, Typography, Container, Box, Alert } from '@mui/material';
@@ -63,6 +63,11 @@ const Login = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            <Box>
+              <Typography color="secondary" variant="body2" component={Link} to="/forgot-password">
+                Forgot Password?
+              </Typography>
+            </Box>
             <Button
               type="submit"
               fullWidth
@@ -82,7 +87,11 @@ const Login = () => {
             >
               Login with GitHub
             </Button>
-  
+            <Box sx={{ mt: 2 }}>
+              <Typography variant="body2" align="center">
+                Don't have an account? <Typography color="secondary" variant="body2" component={Link} to="/register">Register</Typography>
+              </Typography>
+            </Box>
           </Box>
 
         </Box>

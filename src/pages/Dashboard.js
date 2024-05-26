@@ -48,7 +48,7 @@ const Dashboard = () => {
             <Grid container spacing={3}>
                 <Grid item xs={12} md={6}>
                     <Paper style={{ padding: 16 }}>
-                        <StockSelection onSelect={handleSelectStocks} />
+                    <StockSelection onSelect={handleSelectStocks} selectedStocks={selectedStocks} />
                     </Paper>
                 </Grid>
                 <Grid item xs={12} md={6}>
