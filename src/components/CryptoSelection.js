@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FormControl, InputLabel, MenuItem, Select, Checkbox, ListItemText } from '@mui/material';
 import { db } from '../firebaseConfig'; // adjust the path to match your file structure
 import { doc, getDoc, setDoc } from "firebase/firestore";
+import { LOADING_DIV } from '../utils/constants';
 
 const CryptoSelection = ({ onSelect }) => {
     const [cryptos, setCryptos] = useState([]);
@@ -36,7 +37,7 @@ const CryptoSelection = ({ onSelect }) => {
     };
 
     if (loading) {
-        return <div>Loading...</div>;
+        return LOADING_DIV;
     }
 
     return (

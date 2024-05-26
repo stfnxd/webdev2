@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, Typography, Box } from '@mui/material';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { LOADING_TEXT } from '../utils/constants';
 
 
 const CryptoCard = ({ symbol }) => {
@@ -43,16 +44,16 @@ const CryptoCard = ({ symbol }) => {
                     {priceChange.toFixed(2)}
                 </Typography>
                 <Typography variant="h3" component="div">
-                    ${cryptoData ? cryptoData.price.toFixed(2) : 'Loading...'}
+                    ${cryptoData ? cryptoData.price.toFixed(2) : LOADING_TEXT}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                    Size: {cryptoData ? cryptoData.size : 'Loading...'}
+                    Size: {cryptoData ? cryptoData.size : LOADING_TEXT}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                    Exchange: {cryptoData ? cryptoData.exchange : 'Loading...'}
+                    Exchange: {cryptoData ? cryptoData.exchange : LOADING_TEXT}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                    Timestamp: {cryptoData ? new Date(cryptoData.timestamp).toLocaleString() : 'Loading...'}
+                    Timestamp: {cryptoData ? new Date(cryptoData.timestamp).toLocaleString() : LOADING_TEXT}
                 </Typography>
             </CardContent>
         </Card>

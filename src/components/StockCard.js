@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, Typography, Box } from '@mui/material';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { LOADING_TEXT } from '../utils/constants';
 
 
 const StockCard = ({ symbol }) => {
@@ -46,23 +47,23 @@ const StockCard = ({ symbol }) => {
                 </Typography>
                 
                 <Typography variant="h3" component="div">
-                    ${stockData ? stockData.c.toFixed(2) : 'Loading...'}
+                    ${stockData ? stockData.c.toFixed(2) : LOADING_TEXT}
                 </Typography>
                 
                 <Typography variant="body2" color="text.secondary">
-                    Open: ${stockData ? stockData.o.toFixed(2) : 'Loading...'}
+                    Open: ${stockData ? stockData.o.toFixed(2) : LOADING_TEXT}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                    High: ${stockData ? stockData.h.toFixed(2) : 'Loading...'}
+                    High: ${stockData ? stockData.h.toFixed(2) : LOADING_TEXT}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                    Low: ${stockData ? stockData.l.toFixed(2) : 'Loading...'}
+                    Low: ${stockData ? stockData.l.toFixed(2) : LOADING_TEXT}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                    Volume: {stockData ? stockData.v : 'Loading...'}
+                    Volume: {stockData ? stockData.v : LOADING_TEXT}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                    VWAP: ${stockData ? stockData.vw.toFixed(2) : 'Loading...'}
+                    VWAP: ${stockData ? stockData.vw.toFixed(2) : LOADING_TEXT}
                 </Typography>
             </CardContent>
         </Card>
