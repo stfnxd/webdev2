@@ -25,7 +25,7 @@ const StockCard = ({ symbol }) => {
         return () => clearInterval(intervalId);
     }, [symbol]);
 
-    const priceChange = stockData && prevClose ? stockData.c - prevClose : 0;
+    const priceChange = stockData ? stockData.c - stockData.o : 0;
 
     return (
         <Card style={{ margin: 16 }}>
@@ -58,12 +58,6 @@ const StockCard = ({ symbol }) => {
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                     Low: ${stockData ? stockData.l.toFixed(2) : LOADING_TEXT}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                    Volume: {stockData ? stockData.v : LOADING_TEXT}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                    VWAP: ${stockData ? stockData.vw.toFixed(2) : LOADING_TEXT}
                 </Typography>
             </CardContent>
         </Card>

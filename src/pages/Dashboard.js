@@ -11,6 +11,7 @@ const Dashboard = () => {
     const [selectedStocks, setSelectedStocks] = useState([]);
     const [selectedCryptos, setSelectedCryptos] = useState([]);
     const [user, setUser] = useState(null);
+    const [lastUpdated, setLastUpdated] = useState(null);
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -22,6 +23,7 @@ const Dashboard = () => {
                     const data = userDoc.data();
                     setSelectedStocks(data.selectedStocks || []);
                     setSelectedCryptos(data.selectedCryptos || []);
+                    setLastUpdated(new Date().toLocaleString());
                 }
             }
         };
@@ -32,6 +34,7 @@ const Dashboard = () => {
         setSelectedStocks(stocks);
         if (user) {
             await setDoc(doc(db, 'users', user.uid), { selectedStocks: stocks }, { merge: true });
+            setLastUpdated(new Date().toLocaleString());
         }
     };
 
@@ -39,36 +42,37 @@ const Dashboard = () => {
         setSelectedCryptos(cryptos);
         if (user) {
             await setDoc(doc(db, 'users', user.uid), { selectedCryptos: cryptos }, { merge: true });
+            setLastUpdated(new Date().toLocaleString());
         }
     };
 
-
     return (
-        <Container>
+        <Container maxWidth="xl">
             <Typography variant="h4" gutterBottom>Dashboard</Typography>
-            <Grid container spacing={3}>
-                <Grid item xs={12} md={6}>
-                    <Paper style={{ padding: 16 }}>
-                    <StockSelection onSelect={handleSelectStocks} selectedStocks={selectedStocks} />
+            <Typography variant="subtitle1" >Last Updated At: {lastUpdated}</Typography>
+            <Grid container spacing={4}>
+                <Grid item xs={12} md={3}>
+                    <Paper style={{ padding: 16, marginBottom: '2rem', marginTop: '1rem'}}>
+                        <StockSelection onSelect={handleSelectStocks} selectedStocks={selectedStocks} />
                     </Paper>
-                </Grid>
-                <Grid item xs={12} md={6}>
                     <Paper style={{ padding: 16 }}>
                         <CryptoSelection onSelect={handleSelectCryptos} />
                     </Paper>
                 </Grid>
-            </Grid>
-            <Grid container spacing={3} style={{ marginTop: 16 }}>
-                {selectedStocks.map(stock => (
-                    <Grid item xs={12} sm={6} md={4} key={stock}>
-                        <StockCard symbol={stock} />
+                <Grid item xs={12} md={8}>
+                    <Grid container spacing={3}>
+                        {selectedStocks.map(stock => (
+                            <Grid item xs={12} sm={4} md={4} key={stock}>
+                                <StockCard symbol={stock} />
+                            </Grid>
+                        ))}
+                        {selectedCryptos.map(crypto => (
+                            <Grid item xs={12} sm={4} md={4} key={crypto}>
+                                <CryptoCard symbol={crypto} />
+                            </Grid>
+                        ))}
                     </Grid>
-                ))}
-                {selectedCryptos.map(crypto => (
-                    <Grid item xs={12} sm={6} md={4} key={crypto}>
-                        <CryptoCard symbol={crypto} />
-                    </Grid>
-                ))}
+                </Grid>
             </Grid>
         </Container>
     );

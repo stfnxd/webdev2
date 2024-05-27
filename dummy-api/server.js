@@ -193,7 +193,7 @@ function updateStockData() {
         const stock = stockData[ticker];
         const result = stock.results[0];
         const change = getRandomArbitrary(-5, 5);
-        result.o = result.c;
+        // result.o = result.c;
         result.c += change;
         result.h = Math.max(result.h, result.c);
         result.l = Math.min(result.l, result.c);
