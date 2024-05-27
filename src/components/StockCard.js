@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, Typography, Box } from '@mui/material';
+import { Card, CardContent, Typography, Box, IconButton } from '@mui/material';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { LOADING_TEXT } from '../utils/constants';
 
-
-const StockCard = ({ symbol }) => {
+const StockCard = ({ symbol, isFavorite, onFavoriteToggle }) => {
     const [stockData, setStockData] = useState(null);
     const [prevClose, setPrevClose] = useState(null);
 
@@ -27,8 +28,12 @@ const StockCard = ({ symbol }) => {
 
     const priceChange = stockData ? stockData.c - stockData.o : 0;
 
+    const handleFavoriteClick = () => {
+        onFavoriteToggle(symbol, 'stock');
+    };
+
     return (
-        <Card style={{ margin: 16 }}>
+        <Card style={{ margin: 16, position: 'relative' }}>
             <CardContent>
                 <Box display="flex" justifyContent="space-between" alignItems="start">
                     <Typography variant="h5" component="div">
@@ -45,11 +50,9 @@ const StockCard = ({ symbol }) => {
                     }
                     {priceChange.toFixed(2)}
                 </Typography>
-                
                 <Typography variant="h3" component="div">
                     ${stockData ? stockData.c.toFixed(2) : LOADING_TEXT}
                 </Typography>
-                
                 <Typography variant="body2" color="text.secondary">
                     Open: ${stockData ? stockData.o.toFixed(2) : LOADING_TEXT}
                 </Typography>
@@ -59,6 +62,11 @@ const StockCard = ({ symbol }) => {
                 <Typography variant="body2" color="text.secondary">
                     Low: ${stockData ? stockData.l.toFixed(2) : LOADING_TEXT}
                 </Typography>
+                <Box position="absolute" bottom={8} right={8}>
+                    <IconButton onClick={handleFavoriteClick}>
+                        {isFavorite ? <FavoriteIcon color="secondary" /> : <FavoriteBorderIcon />}
+                    </IconButton>
+                </Box>
             </CardContent>
         </Card>
     );
