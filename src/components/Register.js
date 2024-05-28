@@ -15,7 +15,7 @@ const Register = () => {
       e.preventDefault();
       try {
         await createUserWithEmailAndPassword(auth, email, password);
-        navigate('/');
+        navigate("/", {replace: true});
       } catch (err) {
         setError(err.message);
       }

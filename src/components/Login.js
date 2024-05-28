@@ -25,7 +25,7 @@ const Login = () => {
       const provider = new GithubAuthProvider();
       try {
         await signInWithPopup(auth, provider);
-        navigate('/');
+        navigate("/", {replace: true});
       } catch (err) {
         setError(err.message);
       }
