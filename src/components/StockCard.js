@@ -5,6 +5,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { LOADING_TEXT } from '../utils/constants';
+import { API_URL } from '../utils/constants';
 
 const StockCard = ({ symbol, isFavorite, onFavoriteToggle }) => {
     const [stockData, setStockData] = useState(null);
@@ -12,7 +13,7 @@ const StockCard = ({ symbol, isFavorite, onFavoriteToggle }) => {
 
     useEffect(() => {
         const fetchStockData = async () => {
-            const response = await fetch(`http://localhost:3001/v1/last/stocks/${symbol}`);
+            const response = await fetch(`${API_URL}/stocks/${symbol}`);
             const data = await response.json();
             setPrevClose(stockData ? stockData.c : null);
             if (data.results && Array.isArray(data.results)) {
@@ -62,8 +63,8 @@ const StockCard = ({ symbol, isFavorite, onFavoriteToggle }) => {
                 <Typography variant="body2" color="text.secondary">
                     Low: ${stockData ? stockData.l.toFixed(2) : LOADING_TEXT}
                 </Typography>
-                <Box position="absolute" bottom={8} right={8}>
-                    <IconButton onClick={handleFavoriteClick}>
+                <Box position="absolute" bottom={8} right={8} style={{ marginBottom: '-0.5rem' }}>
+                    <IconButton onClick={handleFavoriteClick} >
                         {isFavorite ? <FavoriteIcon color="secondary" /> : <FavoriteBorderIcon />}
                     </IconButton>
                 </Box>

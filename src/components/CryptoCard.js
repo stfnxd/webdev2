@@ -5,6 +5,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { LOADING_TEXT } from '../utils/constants';
+import { API_URL } from '../utils/constants';
 
 
 const CryptoCard = ({ symbol, isFavorite, onFavoriteToggle }) => {
@@ -13,7 +14,7 @@ const CryptoCard = ({ symbol, isFavorite, onFavoriteToggle }) => {
 
     useEffect(() => {
         const fetchCryptoData = async () => {
-            const response = await fetch(`http://localhost:3001/v1/last/crypto/${symbol}`);
+            const response = await fetch(`${API_URL}/crypto/${symbol}`);
             const data = await response.json();
             if (initialPrice === null) {
                 setInitialPrice(data.last_trade.price);
@@ -55,7 +56,7 @@ const CryptoCard = ({ symbol, isFavorite, onFavoriteToggle }) => {
                     ${cryptoData ? cryptoData.price.toFixed(2) : LOADING_TEXT}
                 </Typography>
                 <Box position="absolute" bottom={8} right={8}>
-                    <IconButton onClick={handleFavoriteClick}>
+                    <IconButton onClick={handleFavoriteClick} style={{ marginBottom: '-0.5rem' }}>
                         {isFavorite ? <FavoriteIcon color="primary" /> : <FavoriteBorderIcon />}
                     </IconButton>
                 </Box>
