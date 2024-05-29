@@ -6,11 +6,14 @@ import CryptoCard from '../CryptoCard';
 
 describe('CryptoCard', () => {
   // Mock fetch function
-  jest.mock('node-fetch', () => jest.fn(() =>
-    Promise.resolve({
-      json: () => Promise.resolve({ last_trade: { price: 100 } }),
-    })
-  ));
+  // This is a simple mock that returns a resolved promise with a JSON object
+  beforeEach(() => {
+    global.fetch = jest.fn(() =>
+      Promise.resolve({
+        json: () => Promise.resolve({ last_trade: { price: 100 } }),
+      })
+    );
+  });
   afterEach(() => {
     jest.clearAllMocks();
   });
