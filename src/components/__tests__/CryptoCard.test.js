@@ -6,6 +6,7 @@ import CryptoCard from '../CryptoCard';
 
 describe('CryptoCard', () => {
   // Mock fetch function
+  // This is a simple mock that returns a resolved promise with a JSON object
   beforeEach(() => {
     global.fetch = jest.fn(() =>
       Promise.resolve({
