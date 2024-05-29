@@ -9,7 +9,7 @@ import { API_URL } from '../utils/constants';
 
 const StockCard = ({ symbol, isFavorite, onFavoriteToggle }) => {
     const [stockData, setStockData] = useState(null);
-    const [prevClose, setPrevClose] = useState(null);
+
 
     useEffect(() => {
         const fetchStockData = async () => {
@@ -26,9 +26,6 @@ const StockCard = ({ symbol, isFavorite, onFavoriteToggle }) => {
         return () => clearInterval(intervalId);
     }, [symbol]);
 
-    useEffect(() => {
-        setPrevClose(stockData ? stockData.c : null);
-    }, [stockData]);
     const priceChange = stockData ? stockData.c - stockData.o : 0;
 
     const handleFavoriteClick = () => {
