@@ -15,7 +15,6 @@ const StockCard = ({ symbol, isFavorite, onFavoriteToggle }) => {
         const fetchStockData = async () => {
             const response = await fetch(`${API_URL}/stocks/${symbol}`);
             const data = await response.json();
-            setPrevClose(stockData ? stockData.c : null);
             if (data.results && Array.isArray(data.results)) {
                 setStockData(data.results[0]);
             }
@@ -27,6 +26,9 @@ const StockCard = ({ symbol, isFavorite, onFavoriteToggle }) => {
         return () => clearInterval(intervalId);
     }, [symbol]);
 
+    useEffect(() => {
+        setPrevClose(stockData ? stockData.c : null);
+    }, [stockData]);
     const priceChange = stockData ? stockData.c - stockData.o : 0;
 
     const handleFavoriteClick = () => {
