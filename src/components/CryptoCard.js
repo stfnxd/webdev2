@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Card, CardContent, Typography, Box, IconButton } from '@mui/material';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
@@ -10,21 +9,30 @@ import { API_URL } from '../utils/constants';
 
 // CryptoCard component
 const CryptoCard = ({ symbol, isFavorite, onFavoriteToggle }) => {
+    // State for storing crypto data and initial price
     const [cryptoData, setCryptoData] = useState(null);
     const [initialPrice, setInitialPrice] = useState(null);
 
+    // Effect hook for fetching crypto data
     useEffect(() => {
+        // Function to fetch crypto data
         const fetchCryptoData = async () => {
-            const { data } = await axios.get(`${API_URL}/crypto/${symbol}`);
+            // Fetch data from API
+            const response = await fetch(`${API_URL}/crypto/${symbol}`);
+            const data = await response.json();
+            // Set initial price if it's not set yet
             if (initialPrice === null) {
                 setInitialPrice(data.last_trade.price);
             }
+            // Set crypto data
             setCryptoData(data.last_trade);
         };
 
+        // Fetch crypto data initially and every 10 seconds
         fetchCryptoData();
         const intervalId = setInterval(fetchCryptoData, 10000);
 
+        // Cleanup function to clear interval
         return () => clearInterval(intervalId);
     }, [symbol, initialPrice]);
 
