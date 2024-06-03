@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Card, CardContent, Typography, Box, IconButton } from '@mui/material';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
@@ -10,11 +11,9 @@ import { API_URL } from '../utils/constants';
 const StockCard = ({ symbol, isFavorite, onFavoriteToggle }) => {
     const [stockData, setStockData] = useState(null);
 
-
     useEffect(() => {
         const fetchStockData = async () => {
-            const response = await fetch(`${API_URL}/stocks/${symbol}`);
-            const data = await response.json();
+            const { data } = await axios.get(`${API_URL}/stocks/${symbol}`);
             if (data.results && Array.isArray(data.results)) {
                 setStockData(data.results[0]);
             }
