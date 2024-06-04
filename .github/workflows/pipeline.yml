@@ -48,18 +48,6 @@ jobs:
     needs: node_js_setup_and_tests
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '18'
-
-    - name: Install dependencies
-      run: npm install
-      working-directory: ./src
-
     - name: Build project
       run: npm run build
       working-directory: ./src
